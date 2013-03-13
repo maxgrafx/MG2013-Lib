@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="net.mg2013.display.bitmap.texture.BitmapDataTexture"/>
+    <classEntry path="net.mg2013.utils.TextureAtlas"/>
+    <classEntry path="net.mg2013.singeltons.Textures"/>
+    <classEntry path="net.mg2013.display.Scale9BitmapDataSprite"/>
+    <classEntry path="net.mg2013.display.ISpriteStageEvents"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
