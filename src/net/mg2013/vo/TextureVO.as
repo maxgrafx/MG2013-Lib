@@ -15,7 +15,6 @@ package net.mg2013.vo
 
 		public function TextureVO(textureID:String, scale9Rectangle:Rectangle = null, repeatTexture:Boolean = false)
 		{
-			//test
 			__textureID = textureID;
 			__scale9Rectangle = scale9Rectangle;
 			__repeatTexture = repeatTexture;
