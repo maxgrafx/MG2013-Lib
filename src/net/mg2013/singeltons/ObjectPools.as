@@ -36,7 +36,14 @@ package net.mg2013.singeltons
 			return instance;
 		}
 
-		//public function createPool(classObject:Class, poolSize:int = 10, ... args):void
+		/**
+		 *
+		 * @param classObject
+		 * @param resetFunction, resetFunction(object:[classObject]) will recieve a instance of the "classObject" and reset it to it's default values.
+		 * @param factoryFunction, factoryFunction():[classObject] will return a instance of the "classObject" and will instantiate it to put in the pool.
+		 * @param poolSize
+		 *
+		 */
 		public function createPool(classObject:Class, resetFunction:Function, factoryFunction:Function = null, poolSize:int = 10):void
 		{
 			if (__poolTypes.indexOf(classObject) >= 0)
@@ -48,7 +55,6 @@ package net.mg2013.singeltons
 			var used:Vector.<int> = new Vector.<int>();
 			for (var i:int = 0; i < poolSize; i++)
 			{
-				//var obj:* = applyToClass(classObject, args);
 				var obj:*;
 				if (factoryFunction != null)
 					obj = factoryFunction();
@@ -61,7 +67,14 @@ package net.mg2013.singeltons
 			__used.push(used);
 		}
 
-		public function getObject(classObject:Class, resetFunction:Function=null):*
+		/**
+		 *
+		 * @param classObject, get a instance of a specific type of Class.
+		 * @param resetFunction, give a different reset function to the Class that will be returned, which will overwrite the default reset function.
+		 * @return
+		 *
+		 */
+		public function getObject(classObject:Class, resetFunction:Function = null):*
 		{
 			trace(classObject);
 			var index:int = __poolTypes.indexOf(classObject);
@@ -111,61 +124,6 @@ package net.mg2013.singeltons
 		//////////////
 		////////////// PROTECTED --------------------------------------------------------------------------------------------- PROTECTED ////////////////////////
 		//////////////
-	/*protected function applyToClass(classObject:Class, args:Array):*
-	{
-		switch (args.length)
-		{
-			case 0:
-				return new classObject();
-				break;
-			case 1:
-				return new classObject(args[0]);
-				break;
-			case 2:
-				return new classObject(args[0], args[1]);
-				break;
-			case 3:
-				return new classObject(args[0], args[1], args[2]);
-				break;
-			case 4:
-				return new classObject(args[0], args[1], args[2], args[3]);
-				break;
-			case 5:
-				return new classObject(args[0], args[1], args[2], args[3], args[4]);
-				break;
-			case 6:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5]);
-				break;
-			case 7:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-				break;
-			case 8:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
-				break;
-			case 9:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-				break;
-			case 10:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
-				break;
-			case 11:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
-				break;
-			case 12:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
-				break;
-			case 13:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12]);
-				break;
-			case 14:
-				return new classObject(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13]);
-				break;
-			default:
-				throw new Error("more than 14 arguments: " + args.length);
-				break;
-		}
-		return null;
-	}*/
 		//////////////
 		////////////// OVERRIDE PROTECTED ------------------------------------------------------------------------------------ OVERRIDE PROTECTED ///////////////
 		//////////////

@@ -1,0 +1,36 @@
+<DOMDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" currentTimeline="1" xflVersion="2.2" creatorInfo="Adobe Flash Professional CS6" platform="Macintosh" versionInfo="Saved by Adobe Flash Macintosh 12.0 build 537" majorVersion="12" buildNumber="537" nextSceneIdentifier="2" playOptionsPlayLoop="false" playOptionsPlayPages="false" playOptionsPlayFrameActions="false">
+     <symbols>
+          <Include href="IconPause.xml" itemID="5123a5b3-00000272" lastModified="1361370935"/>
+          <Include href="IconPlay.xml" itemID="5123a5ab-00000271" lastModified="1361370925"/>
+          <Include href="PausePlayButton.xml" itemID="5124dee8-000002a2" lastModified="1361370950"/>
+          <Include href="Scrubber.xml" itemID="5124e034-000002b0" lastModified="1361371204"/>
+          <Include href="Track.xml" itemID="5124dfe8-000002ac" lastModified="1361374977"/>
+          <Include href="TrackBG.xml" itemID="5124eefa-000003d3" lastModified="1361441098"/>
+          <Include href="VideoControls.xml" itemID="5124de7c-00000288" lastModified="1361375119"/>
+          <Include href="VideoControlsBG.xml" itemID="5124ef8c-000003d7" lastModified="1361375116"/>
+     </symbols>
+     <timelines>
+          <DOMTimeline name="Scene 1">
+               <layers>
+                    <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="VideoControls" selected="true" centerPoint3DX="303.5" centerPoint3DY="200.45">
+                                             <matrix>
+                                                  <Matrix tx="143" ty="180.45"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point x="160.5" y="20"/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timelines>
+     <PrinterSettings platform="macintosh"/>
+     <publishHistory/>
+</DOMDocument>

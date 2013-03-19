@@ -1,30 +1,28 @@
-package net.mg2013.display.bitmap.texture
+package net.mg2013.vo
 {
-	import flash.display.BitmapData;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-	public class BitmapDataTexture extends BitmapData
+	public class TextureVO
 	{
-		private static var POINT:Point = new Point();
-
 		//////////////
 		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR //////////////////////
 		//////////////
-		public function BitmapDataTexture(width:int, height:int, transparent:Boolean = true, fillColor:uint = 4.294967295E9)
+		private var __textureID:String;
+
+		private var __scale9Rectangle:Rectangle;
+
+		private var __repeatTexture:Boolean;
+
+		public function TextureVO(textureID:String, scale9Rectangle:Rectangle = null, repeatTexture:Boolean = false)
 		{
-			super(width, height, transparent, fillColor);
+			__textureID = textureID;
+			__scale9Rectangle = scale9Rectangle;
+			__repeatTexture = repeatTexture;
 		}
 
 		//////////////
 		////////////// PUBLIC ------------------------------------------------------------------------------------------------ PUBLIC ///////////////////////////
 		//////////////
-		public static function fromTexture(bitmapdata:BitmapData, region:Rectangle, frame:Rectangle = null):BitmapDataTexture
-		{
-			var bmd:BitmapDataTexture = new BitmapDataTexture(frame ? frame.width : region.width, frame ? frame.height : region.height, true, 0x00000000);
-			bmd.copyPixels(bitmapdata, region, POINT, null, null, true);
-			return bmd;
-		}
 		//////////////
 		////////////// OVERRIDE PUBLIC --------------------------------------------------------------------------------------- OVERRIDE PUBLIC //////////////////
 		//////////////
@@ -52,5 +50,19 @@ package net.mg2013.display.bitmap.texture
 		//////////////
 		////////////// OVERRIDE GET & SET ------------------------------------------------------------------------------------ OVERRIDE GET & SET ///////////////
 		//////////////
+		public function get textureID():String
+		{
+			return __textureID;
+		}
+
+		public function get scale9Rectangle():Rectangle
+		{
+			return __scale9Rectangle;
+		}
+
+		public function get repeatTexture():Boolean
+		{
+			return __repeatTexture;
+		}
 	}
 }

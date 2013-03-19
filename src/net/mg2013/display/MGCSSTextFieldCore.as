@@ -1,11 +1,16 @@
 package net.mg2013.display
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.PixelSnapping;
+	import flash.events.Event;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
+	import flash.text.TextField;
+	
 	import net.mg2013.collection.MGTextFieldCollection;
 	import net.mg2013.collection.MGTextFieldCollectionTypes;
 	import net.mg2013.display.textfield.TextFieldCoreEvent;
-	
-	import flash.events.Event;
-	import flash.text.TextField;
 
 	[Event(name = "update", type = "net.mg2013.display.textfield.TextFieldCoreEvent")]
 	public class MGCSSTextFieldCore extends TextField
@@ -66,6 +71,20 @@ package net.mg2013.display
 		public function update():void
 		{
 			dispatchEvent(new TextFieldCoreEvent(TextFieldCoreEvent.UPDATE));
+		}
+
+		public function convertToBitmap(xOffset:Number = 0, yOffset:Number = 0, smooth:Boolean = true, pixelsnapping:String = PixelSnapping.AUTO, bitmapClass:Class = null):*
+		{
+			var matrix:Matrix = new Matrix();
+			matrix.scale(this.scaleX, this.scaleY);
+			matrix.rotate(this.rotation);
+			matrix.translate(xOffset, yOffset);
+			var bitmapData:BitmapData = new BitmapData(this.width + (xOffset * 2), this.height + (yOffset * 2), true, 0x00000000);
+			bitmapData.lock();
+			bitmapData.draw(this, matrix, null, this.blendMode, new Rectangle(0, 0, this.width + (xOffset * 2), this.height + (yOffset * 2)), smooth);
+			bitmapData.unlock();
+			var bitmap:Bitmap = bitmapClass ? new bitmapClass(bitmapData, pixelsnapping, smooth) : new Bitmap(bitmapData, pixelsnapping, smooth);
+			return bitmap;
 		}
 
 		//////////-------------------------------------------------------------------------------------------------------------------------- PROTECTED FUNCTIONS

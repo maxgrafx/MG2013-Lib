@@ -6,6 +6,9 @@
     <classEntry path="net.mg2013.singeltons.Textures"/>
     <classEntry path="net.mg2013.display.Scale9BitmapDataSprite"/>
     <classEntry path="net.mg2013.display.ISpriteStageEvents"/>
+    <classEntry path="net.mg2013.display.SkinVideoPlayer"/>
+    <classEntry path="net.mg2013.vo.StyleSheetObject"/>
+    <classEntry path="net.mg2013.vo.TextureVO"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

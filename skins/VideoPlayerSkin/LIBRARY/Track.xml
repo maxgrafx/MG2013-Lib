@@ -1,0 +1,37 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Track" itemID="5124dfe8-000002ac" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="Track" lastModified="1361374977" isSpriteSubclass="true">
+  <timeline>
+    <DOMTimeline name="Track">
+      <layers>
+        <DOMLayer name="Layer 2" color="#9933CC">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="Scrubber" name="scrubber" centerPoint3DX="7.2" centerPoint3DY="22.2">
+                  <matrix>
+                    <Matrix ty="15"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="7.2" y="7.2"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="TrackBG" name="trackBG" selected="true" centerPoint3DX="126.5" centerPoint3DY="20">
+                  <transformationPoint>
+                    <Point x="126.5" y="20"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

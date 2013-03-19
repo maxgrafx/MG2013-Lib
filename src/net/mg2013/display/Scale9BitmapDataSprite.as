@@ -393,5 +393,11 @@ package net.mg2013.display
 			__width = value;
 			validateSize();
 		}
+
+		public function get scale9Rectangle():Rectangle
+		{
+			return __scale9Rectangle;
+		}
+
 	}
 }
