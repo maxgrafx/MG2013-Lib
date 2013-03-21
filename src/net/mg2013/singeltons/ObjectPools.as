@@ -2,7 +2,7 @@ package net.mg2013.singeltons
 {
 	import flash.events.EventDispatcher;
 
-	public class ObjectPools extends EventDispatcher
+	public class ObjectPools
 	{
 		//////////////
 		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR //////////////////////
@@ -15,7 +15,7 @@ package net.mg2013.singeltons
 
 		private var __poolFactoryFunctions:Vector.<Function> = new Vector.<Function>();
 
-		private var __pools:Vector.<Vector.<*>> = new Vector.<Vector.<*>>();
+		private var __pools:Vector.<Vector.<Object>> = new Vector.<Vector.<Object>>();
 
 		private var __used:Vector.<Vector.<int>> = new Vector.<Vector.<int>>();
 
@@ -51,11 +51,11 @@ package net.mg2013.singeltons
 			__poolTypes.push(classObject);
 			__poolResetFunctions.push(resetFunction);
 			__poolFactoryFunctions.push(factoryFunction);
-			var vector:Vector.<*> = new Vector.<*>();
+			var vector:Vector.<Object> = new Vector.<Object>();
 			var used:Vector.<int> = new Vector.<int>();
 			for (var i:int = 0; i < poolSize; i++)
 			{
-				var obj:*;
+				var obj:Object;
 				if (factoryFunction != null)
 					obj = factoryFunction();
 				else
