@@ -198,10 +198,12 @@ package net.mg2013.display
 					__shape.graphics.clear();
 					__shape.graphics.beginBitmapFill(__bitmapData, null, __repeatTexture, true);
 					__shape.graphics.drawRect(0, 0, isNaN(width) ? 0 : width, isNaN(height) ? 0 : height);
+					__height = height;
 					return;
 				}
 				__shape.width = width;
 				__shape.height = height;
+				__height = height;
 				return;
 			}
 			var w:Number = isNaN(width - __right.width - __left.width) ? 0 : (width - __right.width - __left.width)
@@ -265,6 +267,7 @@ package net.mg2013.display
 				__center.width = w;
 				__center.height = h;
 			}
+			__height = __bottom.y + __bottom.height;
 		}
 
 		protected function initShapes():void
@@ -398,6 +401,5 @@ package net.mg2013.display
 		{
 			return __scale9Rectangle;
 		}
-
 	}
 }

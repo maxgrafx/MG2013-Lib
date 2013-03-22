@@ -11,12 +11,12 @@ package net.mg2013.display
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	public class ButtonBase extends SpriteStageEvents
+	public class InteractiveBase extends SpriteStageEvents
 	{
 		////////// CONSTRUCTOR -------------------------------------------------------------------------------------------------------------------------- CONSTRUCTOR
-		public function ButtonBase()
+		public function InteractiveBase(manageEvents:Boolean = false)
 		{
-			super();
+			super(manageEvents);
 			buttonMode = true;
 			tabEnabled = false;
 			tabChildren = false;
@@ -54,7 +54,7 @@ package net.mg2013.display
 		}
 		
 		////////// MOUSE FUNCTIONS ---------------------------------------------------------------------------------------------------------------------- MOUSE FUNCTIONS
-		protected function rollEvent(event:MouseEvent):void
+		final protected function rollEvent(event:MouseEvent):void
 		{
 			switch (event.type)
 			{
