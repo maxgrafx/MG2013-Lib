@@ -36,9 +36,9 @@ package net.mg2013.display
 
 		private var __center:Shape;
 
-		private var __height:Number;
+		private var __height:Number = 0;
 
-		private var __width:Number;
+		private var __width:Number = 0;
 
 		private var __repeatTexture:Boolean;
 
@@ -66,6 +66,8 @@ package net.mg2013.display
 			__scale9Rectangle = scale9Rect;
 			__repeatTexture = repeatTexture;
 			super(true);
+			__width = __bitmapData.width;
+			__height = __bitmapData.height;
 			initShapes();
 		}
 
@@ -193,17 +195,18 @@ package net.mg2013.display
 		{
 			if (!__scale9Rectangle)
 			{
+				__height = isNaN(height) ? 0 : height;
+				__width = isNaN(width) ? 0 : width;
 				if (__repeatTexture)
 				{
 					__shape.graphics.clear();
 					__shape.graphics.beginBitmapFill(__bitmapData, null, __repeatTexture, true);
-					__shape.graphics.drawRect(0, 0, isNaN(width) ? 0 : width, isNaN(height) ? 0 : height);
-					__height = height;
+					__shape.graphics.drawRect(0, 0, width, height);
 					return;
 				}
 				__shape.width = width;
 				__shape.height = height;
-				__height = height;
+				//__height = height;
 				return;
 			}
 			var w:Number = isNaN(width - __right.width - __left.width) ? 0 : (width - __right.width - __left.width)
@@ -268,6 +271,7 @@ package net.mg2013.display
 				__center.height = h;
 			}
 			__height = __bottom.y + __bottom.height;
+			__width = __right.x + __right.width;
 		}
 
 		protected function initShapes():void

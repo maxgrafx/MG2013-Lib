@@ -76,7 +76,6 @@ package net.mg2013.singeltons
 		 */
 		public function getObject(classObject:Class, resetFunction:Function = null):*
 		{
-			trace(classObject);
 			var index:int = __poolTypes.indexOf(classObject);
 			if (index == -1)
 				throw new Error("There is no pool for class " + classObject);
