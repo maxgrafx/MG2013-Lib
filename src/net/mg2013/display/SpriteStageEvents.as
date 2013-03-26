@@ -29,7 +29,7 @@ package net.mg2013.display
 				removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
 				removeEventListener(Event.REMOVED_FROM_STAGE, removeFromStage);
 			}
-			else
+			else if(__listenersFunctionArray)
 			{
 				var n:int = __listenersFunctionArray.length;
 				for (var i:int = 0; i < n; i++)
