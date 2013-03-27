@@ -1,7 +1,7 @@
 package net.mg2013.utils
 {
 
-	public class BitwiseFlagsUtil
+	public class BitFlagsUtil
 	{
 		//////////////
 		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR //////////////////////
