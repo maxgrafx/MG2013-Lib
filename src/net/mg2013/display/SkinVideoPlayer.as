@@ -225,7 +225,7 @@ package net.mg2013.display
 				__controls.y = __videoHeight - __controls.height - 25;
 				__trackBG.width = __videoWidth - 50 - 26 - 40;
 			}
-			mouseMoveEvent(null);
+			//mouseMoveEvent(null);
 		}
 
 		protected function initVideo():void
