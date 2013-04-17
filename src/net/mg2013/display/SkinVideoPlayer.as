@@ -89,8 +89,12 @@ package net.mg2013.display
 				setViewportRectangle();
 			else
 			{
-				__contentDisplay.fitWidth = __videoWidth;
-				__contentDisplay.fitHeight = __videoHeight;
+				if (__contentDisplay)
+				{
+					trace("__contentDisplay");
+					__contentDisplay.fitWidth = __videoWidth;
+					__contentDisplay.fitHeight = __videoHeight;
+				}
 			}
 			validateContent();
 		}
@@ -219,11 +223,16 @@ package net.mg2013.display
 			}
 			if (__controls)
 			{
-				__controlsHolder.x = 0
-				__controlsHolder.y = 0
-				__controlsBG.width = __videoWidth - 50;
+				if (__controlsHolder)
+				{
+					__controlsHolder.x = 0;
+					__controlsHolder.y = 0;
+				}
+				if (__controlsBG)
+					__controlsBG.width = __videoWidth - 50;
 				__controls.y = __videoHeight - __controls.height - 25;
-				__trackBG.width = __videoWidth - 50 - 26 - 40;
+				if (__trackBG)
+					__trackBG.width = __videoWidth - 50 - 26 - 40;
 			}
 			//mouseMoveEvent(null);
 		}
@@ -342,9 +351,12 @@ package net.mg2013.display
 			trace("videoInitEvent");
 			__videoLoader.removeEventListener(Event.INIT, videoInitEvent);
 			__contentDisplay = ContentDisplay(__videoLoader.content);
-			trace(__videoLoader.metaData.width, __videoLoader.metaData.height);
+			trace("video meta", __videoLoader.metaData.width, __videoLoader.metaData.height);
+			trace(__videoWidth, __videoHeight);
 			initControls();
 			validateContent();
+			//__contentDisplay.fitWidth = __videoWidth;
+			//__contentDisplay.fitHeight = __videoHeight;
 			setSize(__videoWidth, __videoHeight);
 			__videoLoader.gotoVideoTime(0, true);
 		}
