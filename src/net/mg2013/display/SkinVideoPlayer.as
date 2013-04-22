@@ -6,16 +6,21 @@ package net.mg2013.display
 	import com.greensock.layout.ScaleMode;
 	import com.greensock.loading.VideoLoader;
 	import com.greensock.loading.display.ContentDisplay;
+	
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
+	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
 	import flash.events.StageVideoAvailabilityEvent;
 	import flash.events.StageVideoEvent;
 	import flash.geom.Rectangle;
 	import flash.media.StageVideoAvailability;
 	import flash.net.URLRequest;
+	
 	import net.mg2013.memory.GarbageCollection;
+	
 	import org.casalib.events.InactivityEvent;
 	import org.casalib.time.Inactivity;
 	import org.casalib.util.StageReference;
@@ -60,6 +65,12 @@ package net.mg2013.display
 		private var __url:String;
 
 		private var __usingStageVideo:Boolean;
+
+		private var __fullscreenButton:Sprite;
+
+		private var __fullscreenCollapseIcon:Sprite;
+
+		private var __fullscreenExpandIcon:Sprite;
 
 		public function SkinVideoPlayer(url:String, videoWidth:int, videoHeight:int, controlsClass:Class)
 		{
@@ -193,6 +204,12 @@ package net.mg2013.display
 			__trackBG.buttonMode = true;
 			__trackBG.tabChildren = __trackBG.tabEnabled = __trackBG.mouseChildren = false;
 			__trackBG.addEventListener(MouseEvent.MOUSE_DOWN, trackDownEvent, false, 0, true);
+			__fullscreenButton = __controls.getChildByName("fullscreenButton") as Sprite;
+			__fullscreenButton.addEventListener(MouseEvent.CLICK, fullscreenClickEvent, false, 0, true);
+			__fullscreenButton.buttonMode = true;
+			__fullscreenExpandIcon = __fullscreenButton.getChildByName("ExpandIcon") as Sprite;
+			__fullscreenCollapseIcon = __fullscreenButton.getChildByName("CollapseIcon") as Sprite;
+			__fullscreenCollapseIcon.visible = false;
 			__pausePlayButton = __controls.getChildByName("pausePlayButton") as Sprite;
 			__pausePlayButton.addEventListener(MouseEvent.CLICK, pausePlayClickEvent, false, 0, true);
 			__pausePlayButton.buttonMode = true;
@@ -232,7 +249,9 @@ package net.mg2013.display
 					__controlsBG.width = __videoWidth - 50;
 				__controls.y = __videoHeight - __controls.height - 25;
 				if (__trackBG)
-					__trackBG.width = __videoWidth - 50 - 26 - 40;
+					__trackBG.width = __videoWidth - 50 - 26 - 40 - 40;
+				if (__fullscreenButton)
+					__fullscreenButton.x = __controlsBG.x + __controlsBG.width - 40;
 			}
 			//mouseMoveEvent(null);
 		}
@@ -316,6 +335,14 @@ package net.mg2013.display
 			__wasPlaying = !__videoLoader.videoPaused;
 		}
 
+		protected function fullscreenClickEvent(event:Event):void
+		{
+			if (stage.displayState == StageDisplayState.NORMAL)
+				stage.displayState = StageDisplayState.FULL_SCREEN;
+			else
+				stage.displayState = StageDisplayState.NORMAL;
+		}
+
 		//////////////
 		////////////// OVERRIDE MOUSE EVENTS --------------------------------------------------------------------------------- OVERRIDE MOUSE EVENTS ////////////
 		//////////////
@@ -384,6 +411,34 @@ package net.mg2013.display
 			trace("stageVideoStateChange", status);
 		}
 
+		protected function fullscreenEvent(event:FullScreenEvent):void
+		{
+			if (event.fullScreen)
+			{
+				// Remove input text fields. 
+				// Add a button that closes full-screen mode. 
+				__fullscreenCollapseIcon.visible = true;
+				__fullscreenExpandIcon.visible = false;
+			}
+			else
+			{
+				__fullscreenCollapseIcon.visible = false;
+				__fullscreenExpandIcon.visible = true;
+					// Re-add input text fields. 
+					// Remove the button that closes full-screen mode. 
+			}
+		}
+
+		protected function onStageVideoState(event:StageVideoAvailabilityEvent):void
+		{
+			var available:Boolean = (event.availability == StageVideoAvailability.AVAILABLE);
+			trace("available", available);
+			if (available)
+				initStageVideo();
+			else
+				initVideo();
+		}
+
 		//////////////
 		////////////// OVERRIDE EVENTS --------------------------------------------------------------------------------------- OVERRIDE EVENTS //////////////////
 		//////////////
@@ -397,16 +452,7 @@ package net.mg2013.display
 			__userIDLE.addEventListener(InactivityEvent.ACTIVATED, activeEvent, false, 0, true);
 			__userIDLE.start();
 			stage.addEventListener(StageVideoAvailabilityEvent.STAGE_VIDEO_AVAILABILITY, onStageVideoState, false, 0, true);
-		}
-
-		protected function onStageVideoState(event:StageVideoAvailabilityEvent):void
-		{
-			var available:Boolean = (event.availability == StageVideoAvailability.AVAILABLE);
-			trace("available", available);
-			if (available)
-				initStageVideo();
-			else
-				initVideo();
+			stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullscreenEvent, false, 0, true);
 		}
 
 		override protected function removeFromStage(event:Event):void

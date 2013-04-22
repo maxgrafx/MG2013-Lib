@@ -2,7 +2,6 @@ package net.mg2013.display
 {
 	import flash.display.BitmapData;
 	import flash.display.Shape;
-	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -76,8 +75,8 @@ package net.mg2013.display
 		//////////////
 		public function setSize(_width:Number, _height:Number):void
 		{
-			width = _width;
-			height = _height;
+			__width = _width;
+			__height = _height;
 		}
 
 		//////////////
@@ -276,6 +275,7 @@ package net.mg2013.display
 
 		protected function initShapes():void
 		{
+			
 			if (!__scale9Rectangle)
 			{
 				__shape = new Shape();
@@ -363,15 +363,7 @@ package net.mg2013.display
 		//////////////
 		////////////// OVERRIDE EVENTS --------------------------------------------------------------------------------------- OVERRIDE EVENTS //////////////////
 		//////////////
-		override protected function addedToStage(event:Event):void
-		{
-			super.addedToStage(event);
-		}
-
-		override protected function removeFromStage(event:Event):void
-		{
-			super.removeFromStage(event);
-		}
+		
 
 		//////////////
 		////////////// GET & SET --------------------------------------------------------------------------------------------- GET & SET ////////////////////////
