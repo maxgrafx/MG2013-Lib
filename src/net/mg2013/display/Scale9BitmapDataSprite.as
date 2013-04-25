@@ -77,6 +77,7 @@ package net.mg2013.display
 		{
 			__width = _width;
 			__height = _height;
+			validateSize();
 		}
 
 		//////////////
