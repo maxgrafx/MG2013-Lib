@@ -1,12 +1,11 @@
 package net.mg2013.display
 {
 	import net.mg2013.collection.MGTextFieldCollectionTypes;
-	import flash.text.StyleSheet;
 
 	public class MGCSSTextFieldOmniline extends MGCSSTextFieldSingleline
 	{
 		////////// CONSTRUCTOR -------------------------------------------------------------------------------------------------------------------------- CONSTRUCTOR
-		public function MGCSSTextFieldOmniline(_css:StyleSheet, _width:Number, _height:Number, maxWidth:Number, _text:String = "", _wordWrap:Boolean = false, _autoSizeLeft:Boolean = true, _mouseEnabled:Boolean = false, _selectable:Boolean = false, _id:String = null, collectionType:int = MGTextFieldCollectionTypes.SKIP_COLLECTION)
+		public function MGCSSTextFieldOmniline(_css:*, _width:Number, _height:Number, maxWidth:Number, _text:String = "", _wordWrap:Boolean = false, _autoSizeLeft:Boolean = true, _mouseEnabled:Boolean = false, _selectable:Boolean = false, _id:String = null, collectionType:int = MGTextFieldCollectionTypes.SKIP_COLLECTION)
 		{
 			super(_css, _width, _height, _text, _autoSizeLeft, _mouseEnabled, _selectable, _wordWrap, _id, collectionType);
 			if (width > maxWidth)
