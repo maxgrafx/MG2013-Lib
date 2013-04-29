@@ -13,9 +13,9 @@ package net.mg2013.display
 		//////////-------------------------------------------------------------------------------------------------------------------------- CONSTRUCTOR
 		public function MGInputSinglelineTextField(_format:TextFormat, _width:Number = 0, _height:Number = 0, _text:String = "", _fieldType:String = MGInputTextFieldType.ALL, _autoSizeLeft:Boolean = true, _wordWrap:Boolean = false, _id:String = null)
 		{
-			super(null, _width, _height, _text, _autoSizeLeft, true, true, _wordWrap, _id);
+			super(_format, _width, _height, _text, _autoSizeLeft, true, true, _wordWrap, _id);
 			__fieldType = _fieldType;
-			defaultTextFormat = _format;
+			//defaultTextFormat = _format;
 			if (__fieldType != "")
 				MGInputTextFieldType.setRestriction(this, __fieldType);
 			text = _text;
