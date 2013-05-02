@@ -28,6 +28,13 @@ package net.mg2013.vo
             return new TextureVO(__textureID, __scale9Rectangle.clone(), __repeatTexture);
         }
 
+        public function dispose():void
+        {
+            __textureID = null;
+            __scale9Rectangle.setEmpty();
+            __scale9Rectangle = null;
+        }
+
         //////////////
         ////////////// OVERRIDE PUBLIC --------------------------------------------------------------------------------------- OVERRIDE PUBLIC //////////////////
         //////////////
