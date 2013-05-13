@@ -79,6 +79,12 @@ package net.mg2013.utils
 			return c;
 		}
 
+		/**
+		 * 
+		 * @param c (0xFF0000), returns FF0000
+		 * @return 
+		 * 
+		 */
 		public static function hex2css(c:int):String
 		{
 			var r:String = convertChannelToHexStr(MGColorUtil.extractRed(c));
