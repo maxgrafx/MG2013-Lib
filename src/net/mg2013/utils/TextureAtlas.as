@@ -1,7 +1,6 @@
 package net.mg2013.utils
 {
 	import net.mg2013.display.bitmap.texture.BitmapDataTexture;
-	
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 
@@ -36,13 +35,13 @@ package net.mg2013.utils
 			__ids.push(name);
 		}
 
-		public function getTexture(name:String):BitmapDataTexture
+		public function getTexture(name:String, trimmed:Boolean = false):BitmapDataTexture
 		{
 			var index:int = __ids.indexOf(name);
 			if (index == -1)
 				return null;
 			else
-				return BitmapDataTexture.fromTexture(__atlasTexture, __regions[index], __frames[index]);
+				return BitmapDataTexture.fromTexture(__atlasTexture, __regions[index], trimmed ? null : __frames[index]);
 		}
 
 		//////////////

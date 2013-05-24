@@ -221,7 +221,6 @@ package net.mg2013.display
                 }
                 __shape.width = width;
                 __shape.height = height;
-                //__height = height;
                 return;
             }
             var w:Number = isNaN(width - __right.width - __left.width) ? 0 : (width - __right.width - __left.width)
@@ -411,27 +410,24 @@ package net.mg2013.display
             return __scale9Rectangle;
         }
 
-		public function get marginLeft():Number
-		{
-			return __marginLeft;
-		}
+        public function get marginLeft():Number
+        {
+            return __marginLeft;
+        }
 
-		public function get marginTop():Number
-		{
-			return __marginTop;
-		}
+        public function get marginTop():Number
+        {
+            return __marginTop;
+        }
 
-		public function get marginRight():Number
-		{
-			return __marginRight;
-		}
+        public function get marginRight():Number
+        {
+            return __marginRight;
+        }
 
-		public function get marginBottom():Number
-		{
-			return __marginBottom;
-		}
-
-
-
+        public function get marginBottom():Number
+        {
+            return __marginBottom;
+        }
     }
 }

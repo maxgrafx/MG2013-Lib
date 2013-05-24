@@ -2,6 +2,7 @@ package net.mg2013.singeltons
 {
     import flash.display.BitmapData;
     import flash.events.EventDispatcher;
+    
     import net.mg2013.utils.TextureAtlas;
 
     public class Textures extends EventDispatcher
@@ -41,11 +42,11 @@ package net.mg2013.singeltons
             return instance;
         }
 
-        public function getTexture(id:String):BitmapData
+        public function getTexture(id:String, trimmed:Boolean = false):BitmapData
         {
             if (__atlas.ids.indexOf(id) >= 0)
             {
-                return __atlas.getTexture(id);
+                return __atlas.getTexture(id,trimmed);
             }
             else if (__customIDs.indexOf(id) >= 0)
             {

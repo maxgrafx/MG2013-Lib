@@ -12,12 +12,14 @@ package net.mg2013.vo
         private var __scale9Rectangle:Rectangle;
 
         private var __repeatTexture:Boolean;
+        private var __trimmed:Boolean;
 
-        public function TextureVO(textureID:String, scale9Rectangle:Rectangle = null, repeatTexture:Boolean = false)
+        public function TextureVO(textureID:String, scale9Rectangle:Rectangle = null, repeatTexture:Boolean = false, trimmed:Boolean=false)
         {
             __textureID = textureID;
             __scale9Rectangle = scale9Rectangle;
             __repeatTexture = repeatTexture;
+			__trimmed = trimmed;
         }
 
         //////////////
@@ -76,5 +78,11 @@ package net.mg2013.vo
         {
             return __repeatTexture;
         }
+
+		public function get trimmed():Boolean
+		{
+			return __trimmed;
+		}
+
     }
 }
