@@ -1,23 +1,22 @@
-package net.mg2013.display
+package net.mg2013.display9
 {
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.layout.ScaleMode;
 	import com.greensock.loading.VideoLoader;
 	import com.greensock.loading.display.ContentDisplay;
 	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
-	import flash.events.StageVideoAvailabilityEvent;
 	import flash.events.StageVideoEvent;
 	import flash.geom.Rectangle;
-	import flash.media.StageVideoAvailability;
 	import flash.net.URLRequest;
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;
+	import net.mg2013.display.IVideoControls;
+	import net.mg2013.display.SpriteStageEvents;
+	import net.mg2013.display.VideoPlayerDefaultControls;
 	import net.mg2013.memory.GarbageCollection;
 	import org.casalib.events.InactivityEvent;
 	import org.casalib.time.Inactivity;
@@ -49,8 +48,6 @@ package net.mg2013.display
 		private const __controlsFactory:Class = VideoPlayerDefaultControls;
 
 		private var __controls:IVideoControls
-
-		private var __usingStageVideo:Boolean;
 
 		public function SkinVideoPlayer(url:String, videoWidth:int, videoHeight:int, autoPlay:Boolean = false, controlsSkinClass:Class = null, controlsClass:Class = null) //, controlSkinClass:Class, controlsClass:Class=null)
 		{
@@ -92,16 +89,11 @@ package net.mg2013.display
 		{
 			__videoWidth = width;
 			__videoHeight = height;
-			if (__usingStageVideo)
-				setViewportRectangle();
-			else
+			if (__contentDisplay)
 			{
-				if (__contentDisplay)
-				{
-					trace("__contentDisplay");
-					__contentDisplay.fitWidth = __videoWidth;
-					__contentDisplay.fitHeight = __videoHeight;
-				}
+				trace("__contentDisplay");
+				__contentDisplay.fitWidth = __videoWidth;
+				__contentDisplay.fitHeight = __videoHeight;
 			}
 			if (__controls)
 			{
@@ -195,22 +187,14 @@ package net.mg2013.display
 			__videoLoader.addEventListener(VideoLoader.PLAY_PROGRESS, playProgressEvent, false, 0, true);
 			__videoLoader.addEventListener(VideoLoader.VIDEO_PAUSE, pausePlayEvent, false, 0, true);
 			__videoLoader.addEventListener(VideoLoader.VIDEO_PLAY, pausePlayEvent, false, 0, true);
+			__videoLoader.addEventListener(VideoLoader.VIDEO_COMPLETE, videoPlayCompleteEvent, false, 0, true);
 			__videoLoader.addEventListener(LoaderEvent.FAIL, failEvent, false, 0, true);
 			__videoLoader.load();
 		}
 
-		protected function initStageVideo():void
+		protected function videoPlayCompleteEvent(event:Event):void
 		{
-			__usingStageVideo = true;
-			stage.stageVideos[0].addEventListener(StageVideoEvent.RENDER_STATE, stageVideoStateChange);
-			stage.stageVideos[0].viewPort = new Rectangle(int(stage.stageWidth / 2 - __videoWidth / 2), int(stage.stageHeight / 2 - __videoHeight / 2), __videoWidth, __videoHeight);
-			__videoLoader = new VideoLoader(new URLRequest(__url), { autoPlay: __wasPlaying, stageVideo: stage.stageVideos[0]});
-			__videoLoader.addEventListener(Event.INIT, videoInitEvent, false, 0, true);
-			__videoLoader.addEventListener(VideoLoader.PLAY_PROGRESS, playProgressEvent, false, 0, true);
-			__videoLoader.addEventListener(VideoLoader.VIDEO_PAUSE, pausePlayEvent, false, 0, true);
-			__videoLoader.addEventListener(VideoLoader.VIDEO_PLAY, pausePlayEvent, false, 0, true);
-			__videoLoader.addEventListener(LoaderEvent.FAIL, failEvent, false, 0, true);
-			__videoLoader.load();
+			__videoLoader.gotoVideoTime(0);
 		}
 
 		//////////////
@@ -219,21 +203,6 @@ package net.mg2013.display
 		//////////////
 		////////////// MOUSE EVENTS ------------------------------------------------------------------------------------------ MOUSE EVENTS /////////////////////
 		//////////////
-		protected function videoRollEvent(event:MouseEvent):void
-		{
-			switch (event.type)
-			{
-				case MouseEvent.ROLL_OUT:
-					if (__controls)
-						__controls.hide();
-					break;
-				case MouseEvent.ROLL_OVER:
-					if (__controls)
-						__controls.show();
-					break;
-			}
-		}
-
 		protected function fullscreenClickEvent(event:Event):void
 		{
 			if (stage.displayState == StageDisplayState.NORMAL)
@@ -259,6 +228,8 @@ package net.mg2013.display
 				case VideoLoader.VIDEO_PAUSE:
 					if (__controls)
 						__controls.videoPaused = true;
+					if (__controls)
+						__controls.show();
 					break;
 			}
 		}
@@ -287,7 +258,8 @@ package net.mg2013.display
 
 		protected function inactiveEvent(event:InactivityEvent):void
 		{
-			if (__controls)
+			trace("inactiveEvent");
+			if (__controls && !__videoLoader.videoPaused)
 				__controls.hide();
 		}
 
@@ -316,16 +288,6 @@ package net.mg2013.display
 			}
 		}
 
-		protected function onStageVideoState(event:StageVideoAvailabilityEvent):void
-		{
-			var available:Boolean = (event.availability == StageVideoAvailability.AVAILABLE);
-			trace("available", available);
-			if (available)
-				initStageVideo();
-			else
-				initVideo();
-		}
-
 		//////////////
 		////////////// OVERRIDE EVENTS --------------------------------------------------------------------------------------- OVERRIDE EVENTS //////////////////
 		//////////////
@@ -338,7 +300,7 @@ package net.mg2013.display
 			__userIDLE.addEventListener(InactivityEvent.INACTIVE, inactiveEvent, false, 0, true);
 			__userIDLE.addEventListener(InactivityEvent.ACTIVATED, activeEvent, false, 0, true);
 			__userIDLE.start();
-			stage.addEventListener(StageVideoAvailabilityEvent.STAGE_VIDEO_AVAILABILITY, onStageVideoState, false, 0, true);
+			initVideo();
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullscreenEvent, false, 0, true);
 		}
 

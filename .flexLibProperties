@@ -10,6 +10,8 @@
     <classEntry path="net.mg2013.vo.StyleSheetObject"/>
     <classEntry path="net.mg2013.vo.TextureVO"/>
     <classEntry path="net.mg2013.utils.BitFlagsUtil"/>
+    <classEntry path="net.mg2013.display.IVideoControls"/>
+    <classEntry path="net.mg2013.display.VideoPlayerDefaultControls"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
