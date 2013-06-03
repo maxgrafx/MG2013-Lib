@@ -2,8 +2,10 @@ package net.mg2013.display
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
+	import net.mg2013.interfaces.IDisposable;
 
-	public class SpriteStageEvents extends Sprite implements ISpriteStageEvents
+	public class SpriteStageEvents extends Sprite implements ISpriteStageEvents, IDisposable
 	{
 		private var __listenersTypeArray:Array = [];
 

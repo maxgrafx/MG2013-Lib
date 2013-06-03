@@ -7,13 +7,15 @@ package net.mg2013.display
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
-	
+	import flash.text.TextFormat;
 	import net.mg2013.collection.MGTextFieldCollection;
 	import net.mg2013.collection.MGTextFieldCollectionTypes;
 	import net.mg2013.display.textfield.TextFieldCoreEvent;
+	import net.mg2013.interfaces.IDisposable;
+	import net.mg2013.interfaces.IResetable;
 
 	[Event(name = "update", type = "net.mg2013.display.textfield.TextFieldCoreEvent")]
-	public class MGCSSTextFieldCore extends TextField
+	public class MGCSSTextFieldCore extends TextField implements IResetable, IDisposable
 	{
 		private var __id:String
 
@@ -49,23 +51,46 @@ package net.mg2013.display
 		}
 
 		//////////-------------------------------------------------------------------------------------------------------------------------- PUBLIC FUNCTIONS
+		/**
+		 * <p>will trigger the dispose function</p>
+		 * <p>empty the text value</p>
+		 *
+		 */
+		public function reset():void
+		{
+			if (!styleSheet)
+			{
+				defaultTextFormat = new TextFormat();
+				setTextFormat(defaultTextFormat);
+			}
+			htmlText = "";
+			dispose();
+		}
+
+		/**
+		 * <p>removes Textfield from collection.</p>
+		 * <p>Stylesheet is set to "null".</p>
+		 * <p>all eventlisteners (if managed) will be removed.</p>
+		 *
+		 */
 		public function dispose():void
 		{
 			if (collectionType != MGTextFieldCollectionTypes.SKIP_COLLECTION)
 				MGTextFieldCollection.getInstance().clearFromVector(this);
-			/*if (hasEventListener(Event.ADDED_TO_STAGE))
-				removeEventListener(Event.ADDED_TO_STAGE, added);*/
 			if (styleSheet)
 				styleSheet = null;
-			var n:int = __listenersFunctionArray.length;
-			for (var i:int = 0; i < n; i++)
-				super.removeEventListener(__listenersTypeArray[i], __listenersFunctionArray[i], __listenersUseCaptureArray[i]);
-			__listenersTypeArray.length = 0;
-			__listenersFunctionArray.length = 0;
-			__listenersUseCaptureArray.length = 0;
-			__listenersTypeArray = null;
-			__listenersFunctionArray = null;
-			__listenersUseCaptureArray = null;
+			if (__listenersTypeArray && __listenersFunctionArray && __listenersUseCaptureArray)
+			{
+				var n:int = __listenersFunctionArray.length;
+				for (var i:int = 0; i < n; i++)
+					super.removeEventListener(__listenersTypeArray[i], __listenersFunctionArray[i], __listenersUseCaptureArray[i]);
+				__listenersTypeArray.length = 0;
+				__listenersFunctionArray.length = 0;
+				__listenersUseCaptureArray.length = 0;
+				__listenersTypeArray = null;
+				__listenersFunctionArray = null;
+				__listenersUseCaptureArray = null;
+			}
 		}
 
 		public function update():void
@@ -73,6 +98,18 @@ package net.mg2013.display
 			dispatchEvent(new TextFieldCoreEvent(TextFieldCoreEvent.UPDATE));
 		}
 
+		/**
+		 * <p>will convert the Textfield into a Bitmap</p>
+		 * <lu>
+		 * 	<li>@param xOffset will add pixels at the left and right edges of the object. this is usefull when applying a <b>Glow</b> or <b>Dropshadow</b> filters on the returned Bitmapdata</li>
+		 * 	<li>@param yOffset will add pixels at the top and bottom edges of the object. this is usefull when applying a <b>Glow</b> or <b>Dropshadow</b> filters on the returned Bitmapdata</li>
+		 * 	<li>@param smooth will be passed into the smooth var of the <b>Bitmap</b></li>
+		 * 	<li>@param pixelsnapping will be passed into the pixelsnapping var of the <b>Bitmap</b></li>
+		 * 	<li>@param bitmapClass for use of custom classes extended from the <b>Bitmap</b> class</li>
+		 * 	<li>@return</li>
+		 * </lu>
+		 *
+		 */
 		public function convertToBitmap(xOffset:Number = 0, yOffset:Number = 0, smooth:Boolean = true, pixelsnapping:String = PixelSnapping.AUTO, bitmapClass:Class = null):*
 		{
 			var matrix:Matrix = new Matrix();

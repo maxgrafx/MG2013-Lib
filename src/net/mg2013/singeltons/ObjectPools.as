@@ -1,6 +1,6 @@
 package net.mg2013.singeltons
 {
-	import flash.events.EventDispatcher;
+	import flash.utils.describeType;
 
 	public class ObjectPools
 	{
@@ -46,6 +46,11 @@ package net.mg2013.singeltons
 		 */
 		public function createPool(classObject:Class, resetFunction:Function, factoryFunction:Function = null, poolSize:int = 10):void
 		{
+			var typeXML:XML = describeType(classObject);
+			if (String(typeXML.factory.implementsInterface).indexOf("IResetable") < 0)
+			{
+				throw new Error(typeXML.@name + " class doesn't implement net.mg2013.interfaces.IResetable");
+			}
 			if (__poolTypes.indexOf(classObject) >= 0)
 				return;
 			__poolTypes.push(classObject);
