@@ -38,7 +38,7 @@ package net.mg2013.singeltons
 
 		/**
 		 *
-		 * @param classObject
+		 * @param classObject implementing
 		 * @param resetFunction, resetFunction(object:[classObject]) will recieve a instance of the "classObject" and reset it to it's default values.
 		 * @param factoryFunction, factoryFunction():[classObject] will return a instance of the "classObject" and will instantiate it to put in the pool.
 		 * @param poolSize
