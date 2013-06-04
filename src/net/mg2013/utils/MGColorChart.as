@@ -13,6 +13,16 @@ package net.mg2013.utils
 		//////////////
 		////////////// PUBLIC ------------------------------------------------------------------------------------------------ PUBLIC ///////////////////////////
 		//////////////
+		/**
+		 * <p>generates a full color hue range.</p>
+		 * <lu>
+		 * 		<li>@param width</li>
+		 * 		<li>@param height</li>
+		 * 		<li>@param direction: either <b>Horizontal</b> or <b>VERTICAL</b>. All the color hue's will be represented allong either axises.</li>
+		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
+		 * </lu>
+		 *
+		 */
 		public static function fullHueRange(width:int, height:int, direction:String = MGColorChart.VERTICAL):Vector.<uint>
 		{
 			const pixels:Vector.<uint> = new Vector.<uint>(width * height, true);
@@ -52,6 +62,17 @@ package net.mg2013.utils
 			return pixels;
 		}
 
+		/**
+		 * <p>generates a range of 2 colors.</p>
+		 * <lu>
+		 * 		<li>@param width</li>
+		 * 		<li>@param height</li>
+		 *		<li>@param color0</li>
+		 * 		<li>@param color1</li>
+		 * 		<li>@param direction: either <b>Horizontal</b> or <b>VERTICAL</b>. The 2 colors will be represented either from top to bottom, or left to right. Depending the axis</li>
+		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
+		 * </lu>
+		 */
 		public static function doubleColorRange(width:int, height:int, color0:uint, color1:uint, direction:String = MGColorChart.VERTICAL):Vector.<uint>
 		{
 			const pixels:Vector.<uint> = new Vector.<uint>(width * height, true);
@@ -66,7 +87,7 @@ package net.mg2013.utils
 				ratio = 360 / height;
 				for (i = 0; i < n; i++)
 				{
-					color = MGColorUtil.HSV2RGB(ratio * i, 100, 100);
+					color = MGColorUtil.colorChange(color1, color0, ratio * i);
 					for (j = 0; j < m; j++)
 					{
 						pixels[num] = color;
@@ -91,6 +112,17 @@ package net.mg2013.utils
 			return pixels;
 		}
 
+		/**
+		 * <p>generates a full color hue range.</p>
+		 * <lu>
+		 * 		<li>@param width</li>
+		 * 		<li>@param height</li>
+		 *		<li>@param color0: top left color</li>
+		 * 		<li>@param color1: top right color</li>
+		 * 		<li>@param color2: bottom color</li>
+		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
+		 * </lu>
+		 */
 		public static function tripleColorRange(width:int, height:int, color0:uint, color1:uint, color2:uint):Vector.<uint>
 		{
 			var num:int = 0;
@@ -111,6 +143,14 @@ package net.mg2013.utils
 			return pixels;
 		}
 
+		/**
+		 * <p>generates a vector with all the colors possible with the width and height passed to the function.</p>
+		 * <lu>
+		 * 		<li>@param width</li>
+		 * 		<li>@param height</li>
+		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
+		 * </lu>
+		 */
 		public static function fullColorMap(width:int, height:int):Vector.<uint>
 		{
 			var num:int = 0;
