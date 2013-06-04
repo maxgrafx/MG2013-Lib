@@ -1,19 +1,84 @@
 package net.mg2013.utils
 {
-	import flash.geom.ColorTransform;
-	import org.casalib.math.Percent;
-	import org.casalib.util.ColorUtil;
 
 	public class MGColorUtil
 	{
 		////////// CONSTRUCTOR -------------------------------------------------------------------------------------------------------------------------- CONSTRUCTOR
-		public static function colorChange(oldTint:uint, newTint:uint, _tintAmount:Number):uint
+		public static function colorChange(color:uint, into:uint = 0xFFFFFFFF, factor:Number = 0.5, blendAlpha:Boolean = false):uint
 		{
-			var start:ColorTransform = new ColorTransform()
-			start.color = int(oldTint)
-			var end:ColorTransform = new ColorTransform()
-			end.color = int(newTint);
-			return ColorUtil.interpolateColor(start, end, new Percent(_tintAmount)).color
+			if (factor < 0 || factor > 1)
+				factor = 0.5;
+			var a1:uint = (color >> 24) & 0xFF;
+			var r1:uint = (color >> 16) & 0xFF;
+			var g1:uint = (color >> 8) & 0xFF;
+			var b1:uint = (color >> 0) & 0xFF;
+			var a2:uint = (into >> 24) & 0xFF;
+			var r2:uint = (into >> 16) & 0xFF;
+			var g2:uint = (into >> 8) & 0xFF;
+			var b2:uint = (into >> 0) & 0xFF;
+			var a3:uint = (a1 * factor + a2 * (1 - factor)) & 0xFF;
+			var r3:uint = (r1 * factor + r2 * (1 - factor)) & 0xFF;
+			var g3:uint = (g1 * factor + g2 * (1 - factor)) & 0xFF;
+			var b3:uint = (b1 * factor + b2 * (1 - factor)) & 0xFF;
+			return (blendAlpha ? a3 << 24 : 0x0) | (r3 << 16) | (g3 << 8) | b3;
+		}
+
+		public static function HSV2RGB(hue:Number, sat:Number, val:Number):uint
+		{
+			var red:Number, green:Number, blue:Number, i:Number, f:Number, p:Number, q:Number, t:Number;
+			hue %= 360;
+			if (val == 0)
+			{
+				return 0;
+			}
+			sat /= 100;
+			val /= 100;
+			hue /= 60;
+			i = Math.floor(hue);
+			f = hue - i;
+			p = val * (1 - sat);
+			q = val * (1 - (sat * f));
+			t = val * (1 - (sat * (1 - f)));
+			if (i == 0)
+			{
+				red = val;
+				green = t;
+				blue = p;
+			}
+			else if (i == 1)
+			{
+				red = q;
+				green = val;
+				blue = p;
+			}
+			else if (i == 2)
+			{
+				red = p;
+				green = val;
+				blue = t;
+			}
+			else if (i == 3)
+			{
+				red = p;
+				green = q;
+				blue = val;
+			}
+			else if (i == 4)
+			{
+				red = t;
+				green = p;
+				blue = val;
+			}
+			else if (i == 5)
+			{
+				red = val;
+				green = p;
+				blue = q;
+			}
+			red = Math.floor(red * 255);
+			green = Math.floor(green * 255);
+			blue = Math.floor(blue * 255);
+			return RGBToHex(red, green, blue);
 		}
 
 		public static function ARGBToRGB(c:uint):uint
@@ -80,10 +145,10 @@ package net.mg2013.utils
 		}
 
 		/**
-		 * 
+		 *
 		 * @param c (0xFF0000), returns FF0000
-		 * @return 
-		 * 
+		 * @return
+		 *
 		 */
 		public static function hex2css(c:int):String
 		{
