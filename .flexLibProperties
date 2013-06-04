@@ -14,6 +14,7 @@
     <classEntry path="net.mg2013.display.VideoPlayerDefaultControls"/>
     <classEntry path="net.mg2013.interfaces.IResetable"/>
     <classEntry path="net.mg2013.interfaces.IDisposable"/>
+    <classEntry path="net.mg2013.utils.MGColorChart"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
