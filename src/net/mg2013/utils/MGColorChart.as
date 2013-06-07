@@ -84,10 +84,11 @@ package net.mg2013.utils
 			{
 				n = height;
 				m = width;
-				ratio = 360 / height;
+				ratio = 1 / height;
 				for (i = 0; i < n; i++)
 				{
 					color = MGColorUtil.colorChange(color1, color0, ratio * i);
+					//color = MGColorUtil.HSV2RGB(ratio * i, 100, 100);
 					for (j = 0; j < m; j++)
 					{
 						pixels[num] = color;
@@ -113,7 +114,7 @@ package net.mg2013.utils
 		}
 
 		/**
-		 * <p>generates a full color hue range.</p>
+		 * <p>generates a triple color hue range.</p>
 		 * <lu>
 		 * 		<li>@param width</li>
 		 * 		<li>@param height</li>
@@ -136,6 +137,41 @@ package net.mg2013.utils
 				{
 					var color:uint = colors[j];
 					color = MGColorUtil.colorChange(color2, color, wIndex);
+					pixels[num] = color;
+					num++;
+				}
+			}
+			return pixels;
+		}
+
+		/**
+		 * <p>generates a four color hue range.</p>
+		 * <lu>
+		 * 		<li>@param width</li>
+		 * 		<li>@param height</li>
+		 *		<li>@param color0: top left color</li>
+		 * 		<li>@param color1: top right color</li>
+		 * 		<li>@param color2: bottom left color</li>
+		 * 		<li>@param color3: bottom right color</li>
+		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
+		 * </lu>
+		 */
+		public static function fourColorRange(width:int, height:int, color0:uint, color1:uint, color2:uint, color3:uint):Vector.<uint>
+		{
+			var num:int = 0;
+			const colors0:Vector.<uint> = MGColorChart.doubleColorRange(width, 1, color0, color1, MGColorChart.HORIZONTAL);
+			const colors1:Vector.<uint> = MGColorChart.doubleColorRange(width, 1, color2, color3, MGColorChart.HORIZONTAL);
+			const pixels:Vector.<uint> = new Vector.<uint>(width * height, true);
+			const ratio:Number = 1 / height;
+			for (var i:int = 0; i < width; i++)
+			{
+				const topIndex:Number = ratio * i;
+				//const bottomIndex:Number = 1-(ratio * i);
+				for (var j:int = 0; j < height; j++)
+				{
+					var colorTop:uint = colors0[j];
+					var colorBottom:uint = colors1[j];
+					var color:uint = MGColorUtil.colorChange(colorBottom, colorTop, topIndex);
 					pixels[num] = color;
 					num++;
 				}

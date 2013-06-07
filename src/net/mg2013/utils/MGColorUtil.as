@@ -1,8 +1,11 @@
 package net.mg2013.utils
 {
+	import net.mg2013.vo.HSV;
 
 	public class MGColorUtil
 	{
+		private static const hslConstant:Number = 0.003921568627450980392156862745098;
+
 		////////// CONSTRUCTOR -------------------------------------------------------------------------------------------------------------------------- CONSTRUCTOR
 		public static function colorChange(color:uint, into:uint = 0xFFFFFFFF, factor:Number = 0.5, blendAlpha:Boolean = false):uint
 		{
@@ -23,6 +26,67 @@ package net.mg2013.utils
 			return (blendAlpha ? a3 << 24 : 0x0) | (r3 << 16) | (g3 << 8) | b3;
 		}
 
+		/**
+		 *
+		 * @param color uint
+		 * @return net.mg2013.vo.HSV object. with Hue, Saturation and Value variables;
+		 *
+		 */
+		public static function Hex2HSV(color:uint):HSV
+		{
+			//var hsvColor:HSV = new HSV();
+			var rgb:Array = [ 0, 0, 0 ];
+			var hexColor:String = color.toString(16);
+			if (hexColor.length == 1)
+			{
+				hexColor = "000000";
+			}
+			else if (hexColor.length == 4)
+			{
+				hexColor = "00" + hexColor;
+			}
+			rgb[0] = parseInt(hexColor.substr(0, 2), 16) / 255;
+			rgb[1] = parseInt(hexColor.substr(2, 2), 16) / 255;
+			rgb[2] = parseInt(hexColor.substr(4, 2), 16) / 255;
+			var x:Number, f:Number, i:Number, hue:Number, sat:Number, val:Number;
+			x = Math.min(Math.min(rgb[0], rgb[1]), rgb[2]);
+			val = Math.max(Math.max(rgb[0], rgb[1]), rgb[2]);
+			if (x == val)
+			{
+				return new HSV(0, 0, 100);
+			}
+			f = (rgb[0] == x) ? rgb[1] - rgb[2] : ((rgb[1] == x) ? rgb[2] - rgb[0] : rgb[0] - rgb[1]);
+			i = (rgb[0] == x) ? 3 : ((rgb[1] == x) ? 5 : 1);
+			hue = Math.floor((i - f / (val - x)) * 60) % 360;
+			sat = Math.floor(((val - x) / val) * 100);
+			val = Math.floor(val * 100);
+			return new HSV(hue, sat, val);
+		}
+
+		/**
+		 * <p>returns the Hue of the color passed, without any saturation or Chroma.</p>
+		 * <lu>
+		 * 		<li>@param color</li>
+		 * 		<li>@return</li>
+		 * </lu>
+		 *
+		 */
+		public static function Hex2Hue(color:uint):uint
+		{
+			var hsvColor:HSV = Hex2HSV(color);
+			return HSV2RGB(hsvColor.hue, 100, 100);
+		}
+
+		/**
+		 * <p></p>
+		 * <lu>
+		 * 		<li>@param hue: 0 - 360, representing every color hue.</li>
+		 * 		<li>@param sat: 0 - 100, 0 equals no color or white, 100 equals full color.</li>
+		 * 		<li>@param val: 0 - 100, 0 equals black no matter what the other value passed are. 100 equals full Chroma and will appear very bright</li>
+		 * 		<li>@return</li>
+		 * </lu>
+		 *
+		 */
 		public static function HSV2RGB(hue:Number, sat:Number, val:Number):uint
 		{
 			var red:Number, green:Number, blue:Number, i:Number, f:Number, p:Number, q:Number, t:Number;
