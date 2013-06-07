@@ -16,6 +16,10 @@
     <classEntry path="net.mg2013.interfaces.IDisposable"/>
     <classEntry path="net.mg2013.utils.MGColorChart"/>
     <classEntry path="net.mg2013.vo.HSV"/>
+    <classEntry path="net.mg2013.display.color.HueRangePicker"/>
+    <classEntry path="net.mg2013.display.color.HSVRangePicker"/>
+    <classEntry path="net.mg2013.display.color.HSVDisplay"/>
+    <classEntry path="net.mg2013.display.color.FullColorMapPicker"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
