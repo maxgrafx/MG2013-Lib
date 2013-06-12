@@ -8,7 +8,6 @@ package net.mg2013.display.color
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	
 	import net.mg2013.utils.MGColorChart;
 	import net.mg2013.vo.HSV;
 

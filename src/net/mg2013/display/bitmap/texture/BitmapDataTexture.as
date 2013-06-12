@@ -3,6 +3,7 @@ package net.mg2013.display.bitmap.texture
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.getTimer;
 
 	public class BitmapDataTexture extends BitmapData
 	{

@@ -52,14 +52,12 @@ package net.mg2013.utils
 			x = Math.min(Math.min(rgb[0], rgb[1]), rgb[2]);
 			val = Math.max(Math.max(rgb[0], rgb[1]), rgb[2]);
 			if (x == val)
-			{
 				return new HSV(0, 0, 100);
-			}
 			f = (rgb[0] == x) ? rgb[1] - rgb[2] : ((rgb[1] == x) ? rgb[2] - rgb[0] : rgb[0] - rgb[1]);
 			i = (rgb[0] == x) ? 3 : ((rgb[1] == x) ? 5 : 1);
-			hue = Math.floor((i - f / (val - x)) * 60) % 360;
-			sat = Math.floor(((val - x) / val) * 100);
-			val = Math.floor(val * 100);
+			hue = int((i - f / (val - x)) * 60) % 360;
+			sat = int(((val - x) / val) * 100);
+			val = int(val * 100);
 			return new HSV(hue, sat, val);
 		}
 
@@ -139,9 +137,9 @@ package net.mg2013.utils
 				green = p;
 				blue = q;
 			}
-			red = Math.floor(red * 255);
-			green = Math.floor(green * 255);
-			blue = Math.floor(blue * 255);
+			red = int(red * 255);
+			green = int(green * 255);
+			blue = int(blue * 255);
 			return RGBToHex(red, green, blue);
 		}
 
