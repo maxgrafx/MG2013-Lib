@@ -29,16 +29,16 @@ package net.mg2013.display.color
 
 		private var __indicator:Shape;
 
-		public function HueRangePicker(width:int, height:int, direction:String = MGColorChart.VERTICAL)
+		public function HueRangePicker(_width:int, _height:int, direction:String = MGColorChart.VERTICAL)
 		{
 			super();
 			__direction = direction;
-			__pixels = MGColorChart.fullHueRange(width, height, direction);
+			__pixels = MGColorChart.fullHueRange(_width, _height, direction);
 			buttonMode = true;
 			tabChildren = tabEnabled = mouseChildren = false;
-			initBitmap(__pixels, width, height);
+			initBitmap(__pixels, _width, _height);
 			addEventListener(MouseEvent.MOUSE_DOWN, mouseDownEvent, false, 0, true);
-			scrollRect = new Rectangle(0, 0, width, height);
+			scrollRect = new Rectangle(0, 0, _width, _height);
 			initIndicator();
 		}
 

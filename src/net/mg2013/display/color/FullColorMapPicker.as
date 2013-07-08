@@ -9,7 +9,6 @@ package net.mg2013.display.color
 	import flash.geom.Rectangle;
 	
 	import net.mg2013.utils.MGColorChart;
-	import net.mg2013.utils.MGColorUtil;
 	import net.mg2013.vo.HSV;
 
 	[Event(name = "change", type = "flash.events.Event")]

@@ -1,39 +1,50 @@
-package net.mg2013.display.bitmap.texture
+package net.mg2013.vo
 {
-	import flash.display.BitmapData;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.utils.getTimer;
+	import net.mg2013.utils.MGColorUtil;
 
-	public class BitmapDataTexture extends BitmapData
+	public class RGB
 	{
-		private static const POINT:Point = new Point();
-
 		//////////////
 		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR //////////////////////
 		//////////////
-		public function BitmapDataTexture(width:int, height:int, transparent:Boolean = true, fillColor:uint = 4.294967295E9)
+		private var __red:uint;
+
+		private var __green:uint;
+
+		private var __blue:uint;
+
+		public function RGB(red:uint = 0, green:uint = 0, blue:uint = 0)
 		{
-			super(width, height, transparent, fillColor);
+			__red = red;
+			__green = green;
+			__blue = blue;
 		}
 
 		//////////////
 		////////////// PUBLIC ------------------------------------------------------------------------------------------------ PUBLIC ///////////////////////////
 		//////////////
-		public static function fromTexture(bitmapdata:BitmapData, region:Rectangle, frame:Rectangle = null):BitmapDataTexture
+		public function clone():RGB
 		{
-			var bmd:BitmapDataTexture = new BitmapDataTexture(frame ? frame.width : region.width, frame ? frame.height : region.height, true, 0x00000000);
-			var nr:Rectangle = region.clone();
-			if (frame)
-			{
-				bmd.copyPixels(bitmapdata, nr, new Point(Math.abs(frame.x), Math.abs(frame.y)), null, null, true);
-			}
-			else
-			{
-				bmd.copyPixels(bitmapdata, nr, POINT, null, null, true);
-			}
-			return bmd;
+			return new RGB(red, green, blue);
 		}
+
+		public function toString():String
+		{
+			return "net.mg2013.vo.RGB: Red: " + red + ", Green: " + green + ", Blue: " + blue;
+		}
+
+		public function toHex():uint
+		{
+			return MGColorUtil.combineRGB(red, green, blue);
+		}
+
+		public function fromHex(color:uint):void
+		{
+			red = MGColorUtil.extractRed(color);
+			green = MGColorUtil.extractGreen(color);
+			blue = MGColorUtil.extractBlue(color);
+		}
+
 		//////////////
 		////////////// OVERRIDE PUBLIC --------------------------------------------------------------------------------------- OVERRIDE PUBLIC //////////////////
 		//////////////
@@ -58,6 +69,35 @@ package net.mg2013.display.bitmap.texture
 		//////////////
 		////////////// GET & SET --------------------------------------------------------------------------------------------- GET & SET ////////////////////////
 		//////////////
+		public function get red():uint
+		{
+			return __red;
+		}
+
+		public function set red(value:uint):void
+		{
+			__red = value > 255 ? 255 : value;
+		}
+
+		public function get green():uint
+		{
+			return __green;
+		}
+
+		public function set green(value:uint):void
+		{
+			__green = value > 255 ? 255 : value;
+		}
+
+		public function get blue():uint
+		{
+			return __blue;
+		}
+
+		public function set blue(value:uint):void
+		{
+			__blue = value > 255 ? 255 : value;
+		}
 		//////////////
 		////////////// OVERRIDE GET & SET ------------------------------------------------------------------------------------ OVERRIDE GET & SET ///////////////
 		//////////////

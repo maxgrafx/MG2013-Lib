@@ -1,5 +1,6 @@
 package net.mg2013.utils
 {
+	import flash.utils.getTimer;
 
 	public class MGColorChart
 	{
@@ -37,7 +38,7 @@ package net.mg2013.utils
 				ratio = 360 / height;
 				for (i = 0; i < n; i++)
 				{
-					color = MGColorUtil.HSV2RGB(ratio * i, 100, 100);
+					color = MGColorUtil.HSV2RGB(ratio * i, 100, 100).toHex();
 					for (j = 0; j < m; j++)
 					{
 						pixels[num] = color;
@@ -52,7 +53,7 @@ package net.mg2013.utils
 				ratio = 360 / width;
 				for (i = 0; i < n; i++)
 				{
-					color = MGColorUtil.HSV2RGB(ratio * i, 100, 100);
+					color = MGColorUtil.HSV2RGB(ratio * i, 100, 100).toHex();
 					for (j = 0; j < m; j++)
 					{
 						pixels[i + (j * n)] = color;
@@ -73,6 +74,8 @@ package net.mg2013.utils
 		 * 		<li>@return: a uint vector for use with <b>setVector</b> function available in the <b>Bitmapdata</b> class.</li>
 		 * </lu>
 		 */
+		
+
 		public static function doubleColorRange(width:int, height:int, color0:uint, color1:uint, direction:String = MGColorChart.VERTICAL):Vector.<uint>
 		{
 			const pixels:Vector.<uint> = new Vector.<uint>(width * height, true);
@@ -88,7 +91,6 @@ package net.mg2013.utils
 				for (i = 0; i < n; i++)
 				{
 					color = MGColorUtil.colorChange(color1, color0, ratio * i);
-					//color = MGColorUtil.HSV2RGB(ratio * i, 100, 100);
 					for (j = 0; j < m; j++)
 					{
 						pixels[num] = color;
@@ -189,6 +191,7 @@ package net.mg2013.utils
 		 */
 		public static function fullColorMap(width:int, height:int):Vector.<uint>
 		{
+			var time:int = getTimer();
 			var num:int = 0;
 			const colors:Vector.<uint> = MGColorChart.fullHueRange(width, 1, MGColorChart.HORIZONTAL);
 			const pixels:Vector.<uint> = new Vector.<uint>(width * height, true);

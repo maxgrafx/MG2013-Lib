@@ -1,6 +1,7 @@
 package net.mg2013.utils
 {
 	import net.mg2013.vo.HSV;
+	import net.mg2013.vo.RGB;
 
 	public class MGColorUtil
 	{
@@ -34,31 +35,51 @@ package net.mg2013.utils
 		 */
 		public static function Hex2HSV(color:uint):HSV
 		{
-			//var hsvColor:HSV = new HSV();
-			var rgb:Array = [ 0, 0, 0 ];
-			var hexColor:String = color.toString(16);
-			if (hexColor.length == 1)
+			var rgb:RGB = new RGB();
+			rgb.fromHex(color);
+			var red:Number = rgb.red / 255;
+			var green:Number = rgb.green / 255;
+			var blue:Number = rgb.blue / 255;
+			var min:Number;
+			var max:Number;
+			var delta:Number;
+			min = Math.min(red, green, blue);
+			max = Math.max(red, green, blue);
+			var v:Number = max;
+			// v
+			var h:Number;
+			delta = max - min;
+			var s:Number;
+			if (max != 0)
 			{
-				hexColor = "000000";
+				s = delta / max; // s
 			}
-			else if (hexColor.length == 4)
+			else
 			{
-				hexColor = "00" + hexColor;
+				// r = g = b = 0		// s = 0, v is undefined
+				s = 0;
+				h = -1;
+				return new HSV(h, s * 100, v);
 			}
-			rgb[0] = parseInt(hexColor.substr(0, 2), 16) / 255;
-			rgb[1] = parseInt(hexColor.substr(2, 2), 16) / 255;
-			rgb[2] = parseInt(hexColor.substr(4, 2), 16) / 255;
-			var x:Number, f:Number, i:Number, hue:Number, sat:Number, val:Number;
-			x = Math.min(Math.min(rgb[0], rgb[1]), rgb[2]);
-			val = Math.max(Math.max(rgb[0], rgb[1]), rgb[2]);
-			if (x == val)
-				return new HSV(0, 0, 100);
-			f = (rgb[0] == x) ? rgb[1] - rgb[2] : ((rgb[1] == x) ? rgb[2] - rgb[0] : rgb[0] - rgb[1]);
-			i = (rgb[0] == x) ? 3 : ((rgb[1] == x) ? 5 : 1);
-			hue = int((i - f / (val - x)) * 60) % 360;
-			sat = int(((val - x) / val) * 100);
-			val = int(val * 100);
-			return new HSV(hue, sat, val);
+			if (red == max)
+			{
+				h = (green - blue) / delta; // between yellow & magenta
+			}
+			else if (green == max)
+			{
+				h = 2 + (blue - red) / delta; // between cyan & yellow
+			}
+			else
+			{
+				h = 4 + (red - green) / delta; // between magenta & cyan
+			}
+			h *= 60;
+			// degrees
+			if (h < 0)
+			{
+				h += 360;
+			}
+			return new HSV(h, s * 100, v * 100);
 		}
 
 		/**
@@ -72,7 +93,7 @@ package net.mg2013.utils
 		public static function Hex2Hue(color:uint):uint
 		{
 			var hsvColor:HSV = Hex2HSV(color);
-			return HSV2RGB(hsvColor.hue, 100, 100);
+			return HSV2RGB(hsvColor.hue, 100, 100).toHex();
 		}
 
 		/**
@@ -85,13 +106,13 @@ package net.mg2013.utils
 		 * </lu>
 		 *
 		 */
-		public static function HSV2RGB(hue:Number, sat:Number, val:Number):uint
+		public static function HSV2RGB(hue:Number, sat:Number, val:Number):RGB
 		{
 			var red:Number, green:Number, blue:Number, i:Number, f:Number, p:Number, q:Number, t:Number;
 			hue %= 360;
 			if (val == 0)
 			{
-				return 0;
+				return new RGB(0, 0, 0);
 			}
 			sat /= 100;
 			val /= 100;
@@ -140,7 +161,60 @@ package net.mg2013.utils
 			red = int(red * 255);
 			green = int(green * 255);
 			blue = int(blue * 255);
-			return RGBToHex(red, green, blue);
+			//return RGBToHex(red, green, blue);
+			return new RGB(red, green, blue);
+		}
+
+		public static function RGBtoHSV(r:Number, g:Number, b:Number):HSV
+		{
+			r /= 255;
+			g /= 255;
+			b /= 255;
+			var h:Number = 0, s:Number = 0, v:Number = 0;
+			var x:Number, y:Number;
+			if (r >= g)
+				x = r;
+			else
+				x = g;
+			if (b > x)
+				x = b;
+			if (r <= g)
+				y = r;
+			else
+				y = g;
+			if (b < y)
+				y = b;
+			v = x;
+			var c:Number = x - y;
+			if (x == 0)
+				s = 0;
+			else
+				s = c / x;
+			if (s != 0)
+			{
+				if (r == x)
+				{
+					h = (g - b) / c;
+				}
+				else
+				{
+					if (g == x)
+					{
+						h = 2 + (b - r) / c;
+					}
+					else
+					{
+						if (b == x)
+						{
+							h = 4 + (r - g) / c;
+						}
+					}
+				}
+				h = h * 60;
+				if (h < 0)
+					h = h + 360;
+			}
+			return new HSV(h, s * 100, v * 100);
 		}
 
 		public static function ARGBToRGB(c:uint):uint

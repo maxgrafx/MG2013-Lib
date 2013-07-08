@@ -4,8 +4,8 @@ package net.mg2013.display
 	import com.greensock.layout.ScaleMode;
 	import com.greensock.loading.VideoLoader;
 	import com.greensock.loading.display.ContentDisplay;
+	
 	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
@@ -17,8 +17,9 @@ package net.mg2013.display
 	import flash.media.StageVideoAvailability;
 	import flash.net.URLRequest;
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;
+	
 	import net.mg2013.memory.GarbageCollection;
+	
 	import org.casalib.events.InactivityEvent;
 	import org.casalib.time.Inactivity;
 	import org.casalib.util.StageReference;

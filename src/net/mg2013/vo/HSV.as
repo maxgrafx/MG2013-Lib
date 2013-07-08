@@ -23,6 +23,9 @@ package net.mg2013.vo
 		public function HSV(hue:Number = 0, saturation:Number = 100, value:Number = 100)
 		{
 			hue %= 360;
+			hue = Math.round(hue);
+			//saturation = Math.round(saturation);
+			//value = Math.round(value);
 			__hue = hue < 0 ? 0 : hue;
 			__saturation = saturation > 100 ? 100 : saturation < 0 ? 0 : saturation;
 			__value = value > 100 ? 100 : value < 0 ? 0 : value;
@@ -33,8 +36,9 @@ package net.mg2013.vo
 		//////////////
 		public function clone():HSV
 		{
-			return new HSV(__hue, __saturation,__value);
+			return new HSV(__hue, __saturation, __value);
 		}
+
 		public function toString():String
 		{
 			return "net.mg2013.vo.HSV: hue: " + hue + ", saturation: " + saturation + ", value: " + value;
@@ -48,7 +52,6 @@ package net.mg2013.vo
 		public function fromHex(color:uint):void
 		{
 			var hsv:HSV = MGColorUtil.Hex2HSV(color);
-			
 			hue = hsv.hue;
 			saturation = hsv.saturation;
 			value = hsv.value;
@@ -57,7 +60,7 @@ package net.mg2013.vo
 
 		public function toHex():uint
 		{
-			return MGColorUtil.HSV2RGB(hue, saturation, value)
+			return MGColorUtil.HSV2RGB(hue, saturation, value).toHex();
 		}
 
 		//////////////
@@ -95,6 +98,7 @@ package net.mg2013.vo
 		public function set hue(value:Number):void
 		{
 			value %= 360;
+			value = Math.round(value);
 			__hue = value < 0 ? 0 : value;
 		}
 
@@ -105,6 +109,7 @@ package net.mg2013.vo
 
 		public function set saturation(value:Number):void
 		{
+			//value = Math.round(value);
 			__saturation = value > 100 ? 100 : value < 0 ? 0 : value;
 		}
 
@@ -115,6 +120,7 @@ package net.mg2013.vo
 
 		public function set value(value:Number):void
 		{
+			//value = Math.round(value);
 			__value = value > 100 ? 100 : value < 0 ? 0 : value
 		}
 	}

@@ -20,6 +20,7 @@
     <classEntry path="net.mg2013.display.color.HSVRangePicker"/>
     <classEntry path="net.mg2013.display.color.HSVDisplay"/>
     <classEntry path="net.mg2013.display.color.FullColorMapPicker"/>
+    <classEntry path="net.mg2013.vo.RGB"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
