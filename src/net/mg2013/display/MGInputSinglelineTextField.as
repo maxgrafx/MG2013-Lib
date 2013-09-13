@@ -16,6 +16,7 @@ package net.mg2013.display
 
 		public function MGInputSinglelineTextField(_format:TextFormat, _width:Number = 0, _height:Number = 0, _text:String = "", _message:String = "", _fieldType:String = MGInputTextFieldType.ALL, _autoSizeLeft:Boolean = true, _wordWrap:Boolean = false, _id:String = null)
 		{
+			//test
 			super(_format, _width, _height, _text, _autoSizeLeft, true, true, _wordWrap, _id);
 			__fieldType = _fieldType;
 			__message = _message;
