@@ -34,7 +34,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/__common AS3 Lib/bin/__common AS3 Lib.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/GreenSock V12/bin/GreenSock V12.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/__greenSock V12/bin/__greenSock V12.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

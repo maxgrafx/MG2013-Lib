@@ -1,37 +1,48 @@
 package net.mg2013.display.bitmap.texture
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
+	import net.mg2013.interfaces.IDisposable;
+	import net.mg2013.singeltons.Textures;
+	import net.mg2013.vo.TextureVO;
 
-	public class BitmapDataTexture extends BitmapData
+	public class BitmapTexture extends Bitmap implements IDisposable
 	{
-		private static const POINT:Point = new Point();
-
 		//////////////
-		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR //////////////////////
+		////////////// CONSTRUCTOR ------------------------------------------------------------------------------------------- CONSTRUCTOR ///////////////////////////
 		//////////////
-		public function BitmapDataTexture(width:int, height:int, transparent:Boolean = true, fillColor:uint = 4.294967295E9)
+		public function BitmapTexture(texture:*, pixelSnapping:String = "auto", smoothing:Boolean = true)
 		{
-			super(width, height, transparent, fillColor);
+			
+			var bmd:BitmapData
+			var valid:Boolean = true;
+			if (texture is TextureVO)
+			{
+				bmd = Textures.inst.getTexture(TextureVO(texture).textureID, TextureVO(texture).trimmed);
+			}
+			else if (texture is Bitmap)
+			{
+				bmd = Bitmap(texture).bitmapData.clone();
+				texture = null;
+			}
+			else if (texture is BitmapData)
+			{
+				bmd = BitmapData(texture);
+			}
+			else
+				valid = false;
+			super(bmd, pixelSnapping, smoothing);
+			if (!valid)
+				throw new Error("the 'texture' var should be net.mg2013.vo.TextureVO, flash.display.Bitmap or flash.display.BitmapData!");
 		}
 
 		//////////////
 		////////////// PUBLIC ------------------------------------------------------------------------------------------------ PUBLIC ///////////////////////////
 		//////////////
-		public static function fromTexture(bitmapdata:BitmapData, region:Rectangle, frame:Rectangle = null):BitmapDataTexture
+		public function dispose():void
 		{
-			var bmd:BitmapDataTexture = new BitmapDataTexture(frame ? frame.width : region.width, frame ? frame.height : region.height, true, 0x00000000);
-			var nr:Rectangle = region.clone();
-			if (frame)
-			{
-				bmd.copyPixels(bitmapdata, nr, new Point(Math.abs(frame.x), Math.abs(frame.y)), null, null, true);
-			}
-			else
-			{
-				bmd.copyPixels(bitmapdata, nr, POINT, null, null, true);
-			}
-			return bmd;
+			if (bitmapData)
+				bitmapData.dispose();
 		}
 		//////////////
 		////////////// OVERRIDE PUBLIC --------------------------------------------------------------------------------------- OVERRIDE PUBLIC //////////////////
