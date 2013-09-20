@@ -19,7 +19,7 @@ package net.mg2013.display
 		public function MGEventDispatcher(manageEvents:Boolean = false)
 		{
 			super();
-			__manageEvents
+			__manageEvents = manageEvents;
 		}
 
 		//////////////
