@@ -14,7 +14,7 @@ package net.mg2013.display
 
 		private var __listenersUseCaptureArray:Array = [];
 
-		private var __manageEvents:Boolean;
+		private var __manageEvents:Boolean = false;
 
 		public function MGEventDispatcher(manageEvents:Boolean = false)
 		{
@@ -39,9 +39,9 @@ package net.mg2013.display
 				__listenersFunctionArray.length = 0;
 			if (__listenersUseCaptureArray)
 				__listenersUseCaptureArray.length = 0;
-			__listenersTypeArray = null;
-			__listenersFunctionArray = null;
-			__listenersUseCaptureArray = null;
+			__listenersTypeArray = [];
+			__listenersFunctionArray = [];
+			__listenersUseCaptureArray = [];
 		}
 
 		//////////////
