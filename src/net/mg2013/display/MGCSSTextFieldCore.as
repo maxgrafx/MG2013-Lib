@@ -7,15 +7,17 @@ package net.mg2013.display
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	
 	import net.mg2013.collection.MGTextFieldCollection;
 	import net.mg2013.collection.MGTextFieldCollectionTypes;
 	import net.mg2013.display.textfield.TextFieldCoreEvent;
 	import net.mg2013.interfaces.IDisposable;
-	import net.mg2013.interfaces.IResetable;
+	import net.mg2013.interfaces.IPoolable;
 
 	[Event(name = "update", type = "net.mg2013.display.textfield.TextFieldCoreEvent")]
-	public class MGCSSTextFieldCore extends TextField implements IResetable, IDisposable
+	public class MGCSSTextFieldCore extends TextField implements IDisposable, IPoolable
 	{
 		private var __id:String
 
@@ -56,13 +58,21 @@ package net.mg2013.display
 		 * <p>empty the text value</p>
 		 *
 		 */
-		public function reset():void
+		public function reset(args:Array):void
 		{
 			if (!styleSheet)
 			{
 				defaultTextFormat = new TextFormat();
 				setTextFormat(defaultTextFormat);
 			}
+			width = 10;
+			height = 10;
+			mouseEnabled = false;
+			selectable = false;
+			wordWrap = false;
+			id = null;
+			background = false;
+			autoSize = TextFieldAutoSize.LEFT;
 			htmlText = "";
 			dispose();
 		}

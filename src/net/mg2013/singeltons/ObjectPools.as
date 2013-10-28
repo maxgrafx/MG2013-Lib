@@ -1,6 +1,11 @@
 package net.mg2013.singeltons
 {
 	import flash.utils.describeType;
+	
+	import net.mg2013.display.mg_internal;
+	import net.mg2013.interfaces.IPoolable;
+
+	use namespace mg_internal
 
 	public class ObjectPools
 	{
@@ -10,8 +15,6 @@ package net.mg2013.singeltons
 		private static var instance:ObjectPools;
 
 		private var __poolTypes:Vector.<Class> = new Vector.<Class>();
-
-		private var __poolResetFunctions:Vector.<Function> = new Vector.<Function>();
 
 		private var __poolFactoryFunctions:Vector.<Function> = new Vector.<Function>();
 
@@ -37,37 +40,45 @@ package net.mg2013.singeltons
 		}
 
 		/**
+		 * <h1>hasPoolingCapabilities</h1>
+		 * <p>To determine of the class has the capability to implement a pool</p>
+		 * <ul>
+		 * 		<li>@param classObject</li>
+		 * 		<li>@return true if it's capable</li>
+		 * </ul>
+		 *
+		 */
+		mg_internal static function hasPoolingCapabilities(classObject:Class):Boolean
+		{
+			var typeXML:XML = describeType(classObject);
+			if (String(typeXML.factory.implementsInterface).indexOf("IPoolable") < 0)
+			{
+				return false
+			}
+			return true;
+		}
+
+		/**
 		 *
 		 * @param classObject implementing
 		 * @param resetFunction, resetFunction(object:[classObject]) will recieve a instance of the "classObject" and reset it to it's default values.
 		 * @param factoryFunction, factoryFunction():[classObject] will return a instance of the "classObject" and will instantiate it to put in the pool.
-		 * @param poolSize
 		 *
 		 */
-		public function createPool(classObject:Class, resetFunction:Function, factoryFunction:Function = null, poolSize:int = 10):void
+		public function createPool(classObject:Class, factory:Function = null):void
 		{
 			var typeXML:XML = describeType(classObject);
-			if (String(typeXML.factory.implementsInterface).indexOf("IResetable") < 0)
+			if (hasPoolingCapabilities(classObject))
 			{
-				throw new Error(typeXML.@name + " class doesn't implement net.mg2013.interfaces.IResetable");
+				throw new Error(typeXML.@name + " class doesn't implement net.mg2013.interfaces.IPoolable");
 			}
-			if (__poolTypes.indexOf(classObject) >= 0)
+			if (hasPool(classObject))
 				return;
 			__poolTypes.push(classObject);
-			__poolResetFunctions.push(resetFunction);
-			__poolFactoryFunctions.push(factoryFunction);
+			__poolFactoryFunctions.push(factory);
 			var vector:Vector.<Object> = new Vector.<Object>();
 			var used:Vector.<int> = new Vector.<int>();
-			for (var i:int = 0; i < poolSize; i++)
-			{
-				var obj:Object;
-				if (factoryFunction != null)
-					obj = factoryFunction();
-				else
-					obj = new classObject();
-				vector.push(obj);
-				used.push(0);
-			}
+
 			__pools.push(vector);
 			__used.push(used);
 		}
@@ -79,7 +90,7 @@ package net.mg2013.singeltons
 		 * @return
 		 *
 		 */
-		public function getObject(classObject:Class, resetFunction:Function = null):*
+		public function getObject(classObject:Class, args:Array=null):IPoolable
 		{
 			var index:int = __poolTypes.indexOf(classObject);
 			if (index == -1)
@@ -88,31 +99,30 @@ package net.mg2013.singeltons
 			if (index2 >= 0)
 			{
 				__used[index][index2] = 1;
-				if (resetFunction != null)
-					resetFunction(__pools[index][index2]);
-				else
-					__poolResetFunctions[index](__pools[index][index2]);
-				return __pools[index][index2];
+				return __pools[index][index2] as IPoolable;
 			}
 			else
 			{
 				var obj:*;
 				if (__poolFactoryFunctions[index] != null)
-					obj = __poolFactoryFunctions[index]();
+				{
+					obj = __poolFactoryFunctions[index](args);
+				}
 				else
 					obj = new classObject();
 				__pools[index].push(obj);
 				__used[index].push(1);
-				if (resetFunction != null)
+				//IPoolable(obj).reset(
+				/*if (resetFunction != null)
 					resetFunction(obj);
 				else
-					__poolResetFunctions[index](obj);
-				return obj;
+					__poolResetFunctions[index](obj);*/
+				return obj as IPoolable;
 			}
 			return null;
 		}
 
-		public function returnObject(classObject:Class, obj:*):void
+		public function returnObject(classObject:Class, obj:IPoolable):void
 		{
 			var index:int = __poolTypes.indexOf(classObject);
 			if (index == -1)
@@ -121,6 +131,14 @@ package net.mg2013.singeltons
 			if (index2 == -1)
 				return;
 			__used[index][index2] = 0;
+		}
+
+		public function hasPool(classObject:Class):Boolean
+		{
+			var index:int = __poolTypes.indexOf(classObject);
+			if (index >= 0)
+				return true
+			return false;
 		}
 		//////////////
 		////////////// OVERRIDE PUBLIC --------------------------------------------------------------------------------------- OVERRIDE PUBLIC //////////////////
