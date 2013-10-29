@@ -3,6 +3,7 @@ package net.mg2013.display.bitmap.texture
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	
 	import net.mg2013.display.Scale9BitmapDataSprite;
 	import net.mg2013.display.SpriteStageEvents;
 	import net.mg2013.singeltons.Textures;
@@ -35,12 +36,12 @@ package net.mg2013.display.bitmap.texture
 		override public function dispose():void
 		{
 			super.dispose();
-			if (__bg)
+			if (bg)
 			{
-				if (contains(__bg))
-					removeChild(__bg);
-				__bg.dispose();
-				__bg = null;
+				if (contains(bg))
+					removeChild(bg);
+				bg.dispose();
+				bg = null;
 			}
 		}
 
@@ -70,8 +71,8 @@ package net.mg2013.display.bitmap.texture
 				valid = false;
 			if (!valid)
 				throw new Error("the 'texture' var should be net.mg2013.vo.TextureVO, flash.display.Bitmap or flash.display.BitmapData!");
-			__bg = new Scale9BitmapDataSprite(bmd, textureVO ? textureVO.scale9Rectangle : null, textureVO ? textureVO.repeatTexture : false);
-			addChild(__bg);
+			bg = new Scale9BitmapDataSprite(bmd, textureVO ? textureVO.scale9Rectangle : null, textureVO ? textureVO.repeatTexture : false);
+			addChild(bg);
 		}
 
 		//////////////
@@ -102,9 +103,20 @@ package net.mg2013.display.bitmap.texture
 			}
 			super.removeFromStage(event);
 		}
+
+
 		//////////////
 		////////////// GET & SET --------------------------------------------------------------------------------------------- GET & SET ////////////////////////
 		//////////////
+		protected function get bg():Scale9BitmapDataSprite
+		{
+			return __bg;
+		}
+
+		protected function set bg(value:Scale9BitmapDataSprite):void
+		{
+			__bg = value;
+		}
 		//////////////
 		////////////// OVERRIDE GET & SET ------------------------------------------------------------------------------------ OVERRIDE GET & SET ///////////////
 		//////////////

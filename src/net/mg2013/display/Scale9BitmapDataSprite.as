@@ -380,6 +380,30 @@ package net.mg2013.display
         //////////////
         ////////////// GET & SET --------------------------------------------------------------------------------------------- GET & SET ////////////////////////
         //////////////
+		public function get scale9Rectangle():Rectangle
+		{
+			return __scale9Rectangle;
+		}
+		
+		public function get marginLeft():Number
+		{
+			return __marginLeft;
+		}
+		
+		public function get marginTop():Number
+		{
+			return __marginTop;
+		}
+		
+		public function get marginRight():Number
+		{
+			return __marginRight;
+		}
+		
+		public function get marginBottom():Number
+		{
+			return __marginBottom;
+		}
         //////////////
         ////////////// OVERRIDE GET & SET ------------------------------------------------------------------------------------ OVERRIDE GET & SET ///////////////
         //////////////
@@ -405,29 +429,6 @@ package net.mg2013.display
             validateSize();
         }
 
-        public function get scale9Rectangle():Rectangle
-        {
-            return __scale9Rectangle;
-        }
-
-        public function get marginLeft():Number
-        {
-            return __marginLeft;
-        }
-
-        public function get marginTop():Number
-        {
-            return __marginTop;
-        }
-
-        public function get marginRight():Number
-        {
-            return __marginRight;
-        }
-
-        public function get marginBottom():Number
-        {
-            return __marginBottom;
-        }
+       
     }
 }
