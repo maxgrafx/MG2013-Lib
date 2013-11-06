@@ -27,12 +27,13 @@ package net.mg2013.display.textfield
 		/**ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÒÓÔÕÖ×ØÙÚÛÜÝ**/
 		public static const ATOZ_EXTRA_STRING_CAPITALS:String = "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÒÓÔÕÖ×ØÙÚÛÜÝ";
 
+		/**a-z**/
 		public static const ATOZ_STRING:String = "a-z";
 
 		/**àáâäãåæçèêéëìíîïðñòóôõöøùúûüýþÿ**/
 		public static const ATOZ_EXTRA_STRING:String = "àáâäãåæçèêéëìíîïðñòóôõöøùúûüýþÿ";
 
-		/****/
+		/**" " String**/
 		public static const SPACE_STRING:String = " ";
 
 		/**^ **/
