@@ -26,6 +26,7 @@
     <classEntry path="net.mg2013.events.MGEvent"/>
     <classEntry path="net.mg2013.interfaces.IPoolable"/>
     <classEntry path="net.mg2013.display.bitmap.texture.TextureButton"/>
+    <classEntry path="net.mg2013.interfaces.IDisplayObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -22,6 +22,8 @@ package net.mg2013.display
 
 		private var __eventListeners:Dictionary;
 
+		private var __isDisposed:Boolean = false;
+
 		public function MGEventDispatcher(manageEvents:Boolean = true)
 		{
 			super();
@@ -34,6 +36,7 @@ package net.mg2013.display
 		public function dispose():void
 		{
 			removeEventListeners();
+			__isDisposed = true;
 		}
 
 		public function removeEventListeners(type:String = null):void
@@ -129,6 +132,12 @@ package net.mg2013.display
 		{
 			return __manageEvents;
 		}
+
+		public function get isDisposed():Boolean
+		{
+			return __isDisposed;
+		}
+
 		//////////////
 		////////////// OVERRIDE GET & SET ------------------------------------------------------------------------------------ OVERRIDE GET & SET ///////////////
 		//////////////
