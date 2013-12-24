@@ -14,6 +14,11 @@ package net.mg2013.utils
 			return vector
 		}
 
+		public static function getWordCount(value:String):int
+		{
+			return value.match(/[^\s]+/g).length;
+		}
+
 		public static function combineAddressPaths(s1:String, s2:String):String
 		{
 			var str:String = ""
@@ -47,9 +52,5 @@ package net.mg2013.utils
 			}
 			return str
 		}
-
-		
-
-		
 	}
 }
